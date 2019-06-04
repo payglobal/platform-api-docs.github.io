@@ -104,6 +104,18 @@
               }
             }
           }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateUserSuccessResponse"
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -144,6 +156,27 @@
             "maxLength": 75
           }
         }
+      },
+      "CreateUserSuccessResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SuccessResponse"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "ResponseData": {
+                "type": "object",
+                "properties": {
+                  "UserID": {
+                    "type": "string",
+                    "example": "886788245512544"
+                  }
+                }
+              }
+            }
+          }
+        ]
       },
       "SuccessResponse": {
         "type": "object",
