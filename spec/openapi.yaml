@@ -15,6 +15,7 @@ tags:
     description: This operations are performed by the **client application** to obtain an `access_token` in exchange of the `client_token`.
 servers:
   - url: 'http://sandbox.api.payglobal.me/business/api'
+  - url: 'http://api.payglobal.me/business/api'
 
 # Holds the relative paths to the individual endpoints. The path is appended to the
 # basePath in order to construct the full URL. 
