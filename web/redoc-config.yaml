@@ -1,4 +1,20 @@
 theme:
+  spacing:
+    unit: 2
   colors:
     primary:
-      main: '#32329f'
+      main: '#ff9966'
+  typography:
+    lineHeight: '1.2rem'
+    fontFamily: 'Exo, Roboto, sans-serif'
+    headings:
+      fontFamily: 'Exo, Roboto, sans-serif'
+      fontWeight: '500'
+      ineHeight: '1.2em'
+    code:
+      color: '#dd5500'
+  menu:
+    textColor: '#ffffff'
+    backgroundColor: '#1e1618'
+  logo:
+    gutter: '8px'
