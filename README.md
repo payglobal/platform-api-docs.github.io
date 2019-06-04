@@ -2,7 +2,6 @@
 [![Build Status](https://travis-ci.com/payglobal/platform-api-docs.github.io.svg?branch=master)](https://travis-ci.org/payglobal/platform-api-docs.github.io)
 
 ## Links
-
 - [Reference Documentation](https://docs.api.payglobal.me/platform-api-docs.github.io/)
 - OpenAPI Raw Files: [JSON](https://docs.api.payglobal.me/openapi.json) [YAML](https://docs.api.payglobal.me/openapi.yaml)
 

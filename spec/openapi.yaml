@@ -11,7 +11,7 @@ info:
   description: |
     
 tags:
-  - name: Client Authorization
+  - name: Client App Authorization
     description: This operations are performed by the **client application** to obtain an `access_token` in exchange of the `client_token`.
 servers:
   - url: 'http://sandbox.api.payglobal.me/business/api'
@@ -23,7 +23,7 @@ paths:
   '/auth/token':
     get:
       tags: 
-        - Client Authorization
+        - Client App Authorization
       summary: Get Access Token
       description: The client application is required to generate a `client_token` in the JWT format and pass as the bearer token to the request. Please read more about the `client_token` in the description of the api above.
       operationId: 'auth/token'
@@ -39,7 +39,7 @@ paths:
   '/auth/token/renew':
     get:
       tags: 
-        - Client Authorization
+        - Client App Authorization
       summary: Renew Access Token
       description: The client application can renew it's expiring `access_token` (before it is expired). Please read more about the `access_token` in the description of the api above.
       operationId: 'auth/token/renew'
