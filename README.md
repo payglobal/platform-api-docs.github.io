@@ -1,8 +1,8 @@
 # Pay Global Platform APIs OpenAPI Specification
-[![Build Status](https://travis-ci.com/payglobal/platform-api-docs.github.io.svg?branch=master)](https://travis-ci.org/payglobal/platform-api-docs.github.io)
+[![Build Status](https://travis-ci.org/payglobal/platform-api-docs.github.io.svg?branch=master)](https://travis-ci.org/payglobal/platform-api-docs.github.io)
 
 ## Links
-- [Reference Documentation](https://docs.api.payglobal.me/platform-api-docs.github.io/)
+- [Reference Documentation](https://docs.api.payglobal.me)
 - OpenAPI Raw Files: [JSON](https://docs.api.payglobal.me/openapi.json) [YAML](https://docs.api.payglobal.me/openapi.yaml)
 
 ## Working on specification
