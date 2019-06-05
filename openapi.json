@@ -19,6 +19,10 @@
       "description": "This operations are performed by the **client application** to obtain an `access_token` in exchange of the `client_token`.\n"
     },
     {
+      "name": "Resources",
+      "description": "Resources like available / allowed countries / courrencies.\n"
+    },
+    {
       "name": "User",
       "description": "The endpoints here are used to create a new user (member / individual) account in the platform. The users created by the business, will receive an email containing a link to complete the registration process on the pltatform. \n"
     }
@@ -57,6 +61,25 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenErrorResponseBadRequest"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
           }
         }
       }
@@ -84,6 +107,25 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenErrorResponseBadRequest"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
           }
         }
       }
@@ -96,6 +138,11 @@
         "summary": "Create User",
         "description": "This api is called to create a new user in the platform. Once the user is created in the system, an email containing a link to complete the registration will be sent to the user. The user will not be able to receive the funds or login unless the user has completed the registration process.",
         "operationId": "user/create",
+        "security": [
+          {
+            "access_token": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -115,49 +162,231 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateUserErrorResponseBadRequest"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
           }
         }
       }
     }
   },
   "components": {
+    "responses": {
+      "Unauthorized": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponseUnauthorized"
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Forbidden",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponseForbidden"
+            }
+          }
+        }
+      },
+      "ServerError": {
+        "description": "Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponseServerError"
+            }
+          }
+        }
+      }
+    },
     "schemas": {
+      "ValidationErrorObject": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Location": {
+            "type": "string"
+          },
+          "Field": {
+            "type": "string"
+          },
+          "Error": {
+            "type": "string"
+          }
+        },
+        "example": [
+          {
+            "Location": "body",
+            "Field": "Request Field Name",
+            "Error": "Required Field Missing"
+          },
+          {
+            "Location": "path",
+            "Field": "URL Parameter Name",
+            "Error": "Invalid Data Format"
+          }
+        ]
+      },
+      "SuccessResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ResponseCode": {
+            "type": "number",
+            "example": 200
+          },
+          "ResponseMessage": {
+            "type": "string",
+            "example": "Success"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ResponseCode": {
+            "type": "number",
+            "example": 200
+          },
+          "ResponseMessage": {
+            "type": "string",
+            "example": "Success"
+          }
+        }
+      },
+      "ErrorResponseBadRequest": {
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ErrorResponse"
+          },
+          {
+            "type": "object",
+            "example": {
+              "ResponseCode": 400,
+              "ResponseMessage": "BadRequest"
+            }
+          }
+        ]
+      },
+      "ErrorResponseUnauthorized": {
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ErrorResponse"
+          },
+          {
+            "type": "object",
+            "example": {
+              "ResponseCode": 401,
+              "ResponseMessage": "Unauthorized"
+            }
+          }
+        ]
+      },
+      "ErrorResponseForbidden": {
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ErrorResponse"
+          },
+          {
+            "type": "object",
+            "example": {
+              "ResponseCode": 403,
+              "ResponseMessage": "Forbidden"
+            }
+          }
+        ]
+      },
+      "ErrorResponseServerError": {
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ErrorResponse"
+          },
+          {
+            "type": "object",
+            "example": {
+              "ResponseCode": 500,
+              "ResponseMessage": "ServerError"
+            }
+          }
+        ]
+      },
       "CreateUserRequest": {
         "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "FirstName",
+          "LastName",
+          "MobileCountryCode",
+          "MobileNumber",
+          "CountryCode",
+          "EmailAddress"
+        ],
         "properties": {
           "FirstName": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 30
+            "maxLength": 30,
+            "example": "John"
           },
           "LastName": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 30
+            "maxLength": 30,
+            "example": "Doe"
           },
-          "PhoneCountryCode": {
+          "MobileCountryCode": {
             "type": "string",
-            "pattern": "^\\+[0-9]{1,3}"
+            "pattern": "^\\+[0-9]{1,3}",
+            "example": "+1"
           },
-          "PhoneNumber": {
+          "MobileNumber": {
             "type": "string",
-            "pattern": "^[0-9]{6,14}"
+            "pattern": "^[0-9]{6,14}",
+            "example": "9989767886"
           },
           "CountryCode": {
             "type": "string",
             "maxLength": 2,
             "minLength": 2,
             "pattern": "^[A-Z]{2}",
-            "description": "a 2 letter iso code for the country"
+            "description": "a 2 letter iso code for the country",
+            "example": "US"
           },
           "EmailAddress": {
             "type": "string",
             "minLength": 8,
-            "maxLength": 75
+            "maxLength": 75,
+            "example": "john.doe@example.com"
           }
         }
       },
       "CreateUserSuccessResponse": {
+        "additionalProperties": false,
         "allOf": [
           {
             "$ref": "#/components/schemas/SuccessResponse"
@@ -178,20 +407,27 @@
           }
         ]
       },
-      "SuccessResponse": {
-        "type": "object",
-        "properties": {
-          "ResponseCode": {
-            "type": "number",
-            "example": 200
+      "CreateUserErrorResponseBadRequest": {
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ErrorResponseBadRequest"
           },
-          "ResponseMessage": {
-            "type": "string",
-            "example": "Success"
+          {
+            "type": "object",
+            "properties": {
+              "ResponseError": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ValidationErrorObject"
+                }
+              }
+            }
           }
-        }
+        ]
       },
       "TokenSuccessResponse": {
+        "additionalProperties": false,
         "allOf": [
           {
             "$ref": "#/components/schemas/SuccessResponse"
@@ -207,6 +443,25 @@
                     "format": "JWT",
                     "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiY2xpZW50SUQiOiJiNjNhYzdlYS05MjFkLWMzMzQtMDU3MS04MmRkNDk5ZTg1ZmEiLCJpYXQiOjE1MTYyMzkwMjJ9.2URq7K4IWcOURcgJmeXE8-eAoltt1_xDNMWX_2TAnI0"
                   }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "TokenErrorResponseBadRequest": {
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ErrorResponseBadRequest"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "ResponseError": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ValidationErrorObject"
                 }
               }
             }
